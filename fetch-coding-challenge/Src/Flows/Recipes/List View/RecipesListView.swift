@@ -15,7 +15,11 @@ struct RecipesListView: View {
         NavigationStack {
             List {
                 ForEach(viewModel.recipes) { recipe in
-                    Text(recipe.name)
+                    NavigationLink {
+                        RecipeDetailView(viewModel: .init(id: recipe.id, networkService: .init()))
+                    } label: {
+                        Text(recipe.name)
+                    }
                 }
             }
             .navigationTitle("Desserts")
