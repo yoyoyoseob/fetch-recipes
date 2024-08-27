@@ -5,11 +5,11 @@
 //  Created by Yoseob Lee on 8/26/24.
 //
 
-struct Recipes: Codable {
+struct RecipesResponse: Decodable {
     let meals: [Recipe]
 }
 
-struct Recipe: Codable, Identifiable {
+struct Recipe: Decodable, Identifiable {
     let id: String
     let name: String
     let thumbnailURLString: String

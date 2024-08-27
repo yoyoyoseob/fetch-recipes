@@ -33,8 +33,6 @@ extension EndpointProviding {
         var request = URLRequest(url: url)
         request.httpMethod = method.rawValue.uppercased()
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.addValue("true", forHTTPHeaderField: "X-Use-Cache")
 
         if let body = body {
             request.httpBody = try JSONSerialization.data(withJSONObject: body)

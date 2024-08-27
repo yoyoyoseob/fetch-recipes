@@ -5,7 +5,11 @@
 //  Created by Yoseob Lee on 8/26/24.
 //
 
-struct RecipeDetails: Codable {
+struct RecipeDetailsResponse: Decodable {
+    var meals: [RecipeDetails]
+}
+
+struct RecipeDetails: Decodable {
     let id: String
     let name: String
     let cuisine: String
@@ -13,25 +17,88 @@ struct RecipeDetails: Codable {
     let thumbnailURLString: String
     let videoURLString: String
     let source: String
+    let ingredients: [String]
+    let measurements: [String]
 
-    /*
-     Need to extract and combine ingredients with measurements:
+    var measuredIngredients: [(String, String)] {
+        Array(zip(ingredients, measurements))
+    }
+}
 
-     Ingredients come back in the form of:
-        "strIngredient1": <String>,
-        "strIngredient2": <String>
+extension RecipeDetails {
 
-     Measurements come back in the form of:
-        "strMeasure1": <String>,
-        "strMeasure2": <String>
+    private struct DynamicCodingKeys: CodingKey {
+        var stringValue: String
+        var intValue: Int?
 
-     Documentation isn't exactly clear but the assumption is that they will match 1:1 (up to 20 ingredients)
+        init?(stringValue: String) {
+            self.stringValue = stringValue
+        }
 
-     Approach 1 (extract into two arrays and zip them)
-     Approach 2 (extract into a dictionary and remove null/empty values)
-     Approach 3 (20 separate properties)
+        init?(intValue: Int) {
+            return nil
+        }
+    }
 
-     1 + 2 will require custom decoding
-     3 does not scale well
-     */
+    private enum CodingKeys: String {
+        case id = "idMeal"
+        case name = "strMeal"
+        case cuisine = "strArea"
+        case instructions = "strInstructions"
+        case thumbnailURLString = "strMealThumb"
+        case videoURLString = "strYoutube"
+        case source = "strSource"
+        case ingredient = "strIngredient"
+        case measurement = "strMeasure"
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
+        var idValue = ""
+        var nameValue = ""
+        var cuisineValue = ""
+        var instructionsValue = ""
+        var thumbnailValue = ""
+        var videoURLValue = ""
+        var sourceValue = ""
+
+        // Cannot set directly as there are no guarantees that keys are unique
+        for key in container.allKeys {
+            switch key.stringValue {
+            case CodingKeys.id.rawValue:
+                idValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.name.rawValue:
+                nameValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.cuisine.rawValue:
+                cuisineValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.instructions.rawValue:
+                instructionsValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.thumbnailURLString.rawValue:
+                thumbnailValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.videoURLString.rawValue:
+                videoURLValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.source.rawValue:
+                sourceValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            default: break
+            }
+        }
+
+        // Instead of hardcoding 40+ properties, iterate over the expected number of supported ingredients/measurements
+        var ingredientsValue = [String]()
+        var measurementsValue = [String]()
+        for i in 1...20 {
+            ingredientsValue.append(try container.decode(String.self, forKey: .init(stringValue: "\(CodingKeys.ingredient.rawValue)\(i)")!))
+            measurementsValue.append(try container.decode(String.self, forKey: .init(stringValue: "\(CodingKeys.measurement.rawValue)\(i)")!))
+        }
+
+        id = idValue
+        name = nameValue
+        cuisine = cuisineValue
+        instructions = instructionsValue
+        thumbnailURLString = thumbnailValue
+        videoURLString = videoURLValue
+        source = sourceValue
+        ingredients = ingredientsValue.filter { !$0.isEmpty }
+        measurements = measurementsValue.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+    }
 }
