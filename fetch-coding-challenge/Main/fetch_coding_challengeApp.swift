@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct fetch_coding_challengeApp: App {
+
+    let networkService = NetworkService()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            RecipesListView(viewModel: .init(networkService: networkService))
         }
     }
 }
