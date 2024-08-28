@@ -54,7 +54,7 @@
 		71C7EFD12C7CCCEB009CA0CD /* fetch-coding-challengeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "fetch-coding-challengeUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		71C7EFD52C7CCCEB009CA0CD /* fetch_coding_challengeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetch_coding_challengeUITests.swift; sourceTree = "<group>"; };
 		71C7EFD72C7CCCEB009CA0CD /* fetch_coding_challengeUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetch_coding_challengeUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		71C7EFEA2C7CCE4E009CA0CD /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = SOURCE_ROOT; };
+		71C7EFEA2C7CCE4E009CA0CD /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		71C7EFED2C7CD164009CA0CD /* RecipeEndpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEndpoints.swift; sourceTree = "<group>"; };
 		71C7EFEF2C7CD6CA009CA0CD /* Recipe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recipe.swift; sourceTree = "<group>"; };
 		71D774002C7CDE640073E3CD /* RecipeDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetails.swift; sourceTree = "<group>"; };
