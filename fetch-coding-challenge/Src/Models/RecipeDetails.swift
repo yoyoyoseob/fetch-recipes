@@ -8,7 +8,7 @@
 import Foundation
 
 struct RecipeDetailsResponse: Decodable {
-    var meals: [RecipeDetails]
+    let meals: [RecipeDetails]
 }
 
 struct RecipeDetails: Decodable {
@@ -56,7 +56,7 @@ extension RecipeDetails {
         var instructionsValue = ""
         var videoValue: URL?
 
-        // Cannot set directly as there are no guarantees that keys are unique
+        // Cannot set directly as there are no guarantees that keys are unique. In this case we simply take the latest value.
         for key in container.allKeys {
             switch key.stringValue {
             case CodingKeys.id.rawValue:
@@ -71,7 +71,8 @@ extension RecipeDetails {
             }
         }
 
-        // Instead of hardcoding 40+ properties, iterate over the expected number of supported ingredients/measurements
+        // Instead of hardcoding 40+ properties, iterate over the expected number of supported ingredients/measurements.
+        // Documentation isn't clear but assuming that API supports up to 20 ingredients.
         var ingredientsValue = [String]()
         var measurementsValue = [String]()
         for i in 1...20 {
