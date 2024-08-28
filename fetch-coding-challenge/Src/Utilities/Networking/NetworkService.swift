@@ -7,12 +7,13 @@
 
 import Foundation
 
-final class NetworkService: ObservableObject {
+final class NetworkService: ObservableObject, Sendable {
 
+    private let session = URLSession(configuration: .default)
     private let decoder = JSONDecoder()
 
     func request<T: Decodable>(endpoint: EndpointProviding) async throws -> T {
-        let (data, response) = try await URLSession.shared.data(for: endpoint.asURLRequest())
+        let (data, response) = try await session.data(for: endpoint.asURLRequest())
         return try decodeResponse(data: data, response: response)
     }
 
