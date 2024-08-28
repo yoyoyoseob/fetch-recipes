@@ -25,6 +25,7 @@
 		71D7740E2C7D5A1B0073E3CD /* RecipesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7740D2C7D5A1B0073E3CD /* RecipesListViewModel.swift */; };
 		71D774102C7D5B940073E3CD /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7740F2C7D5B940073E3CD /* RecipeDetailView.swift */; };
 		71D774142C7D63CF0073E3CD /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D774132C7D63CF0073E3CD /* RecipeDetailViewModel.swift */; };
+		71D774162C7EB6290073E3CD /* MeasuredIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		71D7740D2C7D5A1B0073E3CD /* RecipesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesListViewModel.swift; sourceTree = "<group>"; };
 		71D7740F2C7D5B940073E3CD /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		71D774132C7D63CF0073E3CD /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
+		71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuredIngredient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,6 +195,7 @@
 			children = (
 				71C7EFEF2C7CD6CA009CA0CD /* Recipe.swift */,
 				71D774002C7CDE640073E3CD /* RecipeDetails.swift */,
+				71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -382,6 +385,7 @@
 				71D774032C7CE0280073E3CD /* APIError.swift in Sources */,
 				71D774012C7CDE640073E3CD /* RecipeDetails.swift in Sources */,
 				71D774092C7CE0710073E3CD /* HTTPMethod.swift in Sources */,
+				71D774162C7EB6290073E3CD /* MeasuredIngredient.swift in Sources */,
 				71C7EFB92C7CCCE6009CA0CD /* fetch_coding_challengeApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

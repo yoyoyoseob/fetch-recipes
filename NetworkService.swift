@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class NetworkService {
+final class NetworkService: ObservableObject {
 
     private let decoder = JSONDecoder()
 

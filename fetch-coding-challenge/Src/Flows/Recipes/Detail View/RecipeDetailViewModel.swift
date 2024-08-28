@@ -12,10 +12,11 @@ extension RecipeDetailView {
     @MainActor
     final class ViewModel: ObservableObject {
 
+        @Published private(set) var recipe: RecipeDetails?
+
         var name: String { recipe?.name ?? "<RecipeName>"}
         var instructions: String { recipe?.instructions ?? "<RecipeInstructions>"}
-        var ingredients: [(String, String)] { recipe?.measuredIngredients ?? [] }
-        @Published private(set) var recipe: RecipeDetails?
+        var ingredients: [MeasuredIngredient] { recipe?.measuredIngredients ?? [] }
 
         private let id: String
         private let networkService: NetworkService
