@@ -55,7 +55,6 @@ struct RecipeDetailView: View {
                         .stroke(.gray, lineWidth: 1)
                 }
 
-
                 Color(.gray.withAlphaComponent(0.4))
                     .frame(height: 1.5)
 
@@ -69,7 +68,8 @@ struct RecipeDetailView: View {
                         Text("**\(index + 1).** \(step)")
                             .multilineTextAlignment(.leading)
                             .fixedSize(horizontal: false, vertical: true)
-                    }.padding(4)
+                    }
+                    .padding(4)
                 }
 
                 if let videoURL = viewModel.videoURL {

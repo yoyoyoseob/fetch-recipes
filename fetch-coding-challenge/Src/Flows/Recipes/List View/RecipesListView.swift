@@ -21,15 +21,13 @@ struct RecipesListView: View {
                     } label: {
                         LazyVStack(alignment: .leading) {
                             HStack {
-                                if let url = recipe.thumbnailPreviewURL {
-                                    AsyncImage(url: url) { image in
-                                        image
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
-                                            .frame(height: 44)
-                                    } placeholder: {
-                                        ProgressView()
-                                    }
+                                AsyncImage(url: recipe.thumbnailPreviewURL) { image in
+                                    image
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(height: 44)
+                                } placeholder: {
+                                    ProgressView()
                                 }
                                 Text(recipe.name)
                             }
