@@ -20,7 +20,7 @@ extension RecipeDetailView {
             return details.instructions.split(whereSeparator: \.isNewline).map { String($0) }
         }
         var ingredients: [MeasuredIngredient] { recipeDetails?.measuredIngredients ?? [] }
-        var imageURL: URL { recipe.thumbnailURL }
+        var imageURL: URL? { URL(string: recipe.thumbnailURLString) }
         var videoURL: URL? { recipeDetails?.videoURL }
 
         private let recipe: Recipe

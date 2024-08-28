@@ -59,9 +59,11 @@ struct RecipeDetailView: View {
                     }.padding(4)
                 }
 
-                VideoPlayer(player: AVPlayer(url: viewModel.videoURL!))
-                    .frame(height: 240)
-                    .padding(.top)
+                if let videoURL = viewModel.videoURL {
+                    VideoPlayer(player: AVPlayer(url: viewModel.videoURL!))
+                        .frame(height: 240)
+                        .padding(.top)
+                }
             }
             .padding(.horizontal)
             .navigationTitle(viewModel.name)
@@ -77,7 +79,7 @@ struct RecipeDetailView: View {
     NavigationStack {
         RecipeDetailView(viewModel: .init(recipe: .init(id: "1",
                                                         name: "Chocolate Buttercream Muffin",
-                                                        thumbnailURL: URL(string: "")!),
+                                                        thumbnailURLString: ""),
                                           networkService: .init()))
     }
 }

@@ -19,17 +19,20 @@ struct RecipesListView: View {
                     NavigationLink {
                         RecipeDetailView(viewModel: .init(recipe: recipe, networkService: networkService))
                     } label: {
-                        HStack {
-                            AsyncImage(url: recipe.thumbnailURL) { image in
-                                image
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(height: 44)
-                            } placeholder: {
-                                ProgressView()
+                        LazyVStack(alignment: .leading) {
+                            HStack {
+                                if let url = recipe.thumbnailPreviewURL {
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 44)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                }
+                                Text(recipe.name)
                             }
-
-                            Text(recipe.name)
                         }
                     }
                     .listRowInsets(.init(top: 0,
