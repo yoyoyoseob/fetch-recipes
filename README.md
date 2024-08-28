@@ -19,5 +19,5 @@ Constraints:
 
 Architecture:
 * SwiftUI
-* MVVMR (Model-View-ViewModel-Router)
+* MVVM
 * Dependency Injection via EnvironmentObject + Constructor Injection
