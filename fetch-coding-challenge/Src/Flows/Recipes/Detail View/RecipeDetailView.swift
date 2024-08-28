@@ -60,7 +60,7 @@ struct RecipeDetailView: View {
                 }
 
                 if let videoURL = viewModel.videoURL {
-                    VideoPlayer(player: AVPlayer(url: viewModel.videoURL!))
+                    VideoPlayer(player: AVPlayer(url: videoURL))
                         .frame(height: 240)
                         .padding(.top)
                 }
