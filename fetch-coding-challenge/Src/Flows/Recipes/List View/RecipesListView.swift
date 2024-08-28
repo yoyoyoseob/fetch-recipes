@@ -17,10 +17,28 @@ struct RecipesListView: View {
             List {
                 ForEach(viewModel.recipes) { recipe in
                     NavigationLink {
-                        RecipeDetailView(viewModel: .init(id: recipe.id, networkService: networkService))
+                        RecipeDetailView(viewModel: .init(recipe: recipe, networkService: networkService))
                     } label: {
-                        Text(recipe.name)
+                        LazyVStack(alignment: .leading) {
+                            HStack {
+                                if let url = recipe.thumbnailPreviewURL {
+                                    AsyncImage(url: url) { image in
+                                        image
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(height: 44)
+                                    } placeholder: {
+                                        ProgressView()
+                                    }
+                                }
+                                Text(recipe.name)
+                            }
+                        }
                     }
+                    .listRowInsets(.init(top: 0,
+                                         leading: 0,
+                                         bottom: 0,
+                                         trailing: 16))
                 }
             }
             .navigationTitle("Desserts")
@@ -32,4 +50,5 @@ struct RecipesListView: View {
 
 #Preview {
     RecipesListView(viewModel: .init(networkService: .init()))
+        .environmentObject(NetworkService())
 }

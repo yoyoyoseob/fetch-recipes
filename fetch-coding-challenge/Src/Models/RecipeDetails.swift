@@ -5,6 +5,8 @@
 //  Created by Yoseob Lee on 8/26/24.
 //
 
+import Foundation
+
 struct RecipeDetailsResponse: Decodable {
     var meals: [RecipeDetails]
 }
@@ -12,11 +14,8 @@ struct RecipeDetailsResponse: Decodable {
 struct RecipeDetails: Decodable {
     let id: String
     let name: String
-    let cuisine: String
     let instructions: String
-    let thumbnailURLString: String
-    let videoURLString: String
-    let source: String
+    let videoURL: URL?
     let ingredients: [String]
     let measurements: [String]
 
@@ -44,11 +43,8 @@ extension RecipeDetails {
     private enum CodingKeys: String {
         case id = "idMeal"
         case name = "strMeal"
-        case cuisine = "strArea"
         case instructions = "strInstructions"
-        case thumbnailURLString = "strMealThumb"
-        case videoURLString = "strYoutube"
-        case source = "strSource"
+        case videoURL = "strYoutube"
         case ingredient = "strIngredient"
         case measurement = "strMeasure"
     }
@@ -57,11 +53,8 @@ extension RecipeDetails {
         let container = try decoder.container(keyedBy: DynamicCodingKeys.self)
         var idValue = ""
         var nameValue = ""
-        var cuisineValue = ""
         var instructionsValue = ""
-        var thumbnailValue = ""
-        var videoURLValue = ""
-        var sourceValue = ""
+        var videoValue: URL?
 
         // Cannot set directly as there are no guarantees that keys are unique
         for key in container.allKeys {
@@ -70,16 +63,10 @@ extension RecipeDetails {
                 idValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
             case CodingKeys.name.rawValue:
                 nameValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
-            case CodingKeys.cuisine.rawValue:
-                cuisineValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
             case CodingKeys.instructions.rawValue:
                 instructionsValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
-            case CodingKeys.thumbnailURLString.rawValue:
-                thumbnailValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
-            case CodingKeys.videoURLString.rawValue:
-                videoURLValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
-            case CodingKeys.source.rawValue:
-                sourceValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.videoURL.rawValue:
+                videoValue = try container.decode(URL.self, forKey: .init(stringValue: key.stringValue)!)
             default: break
             }
         }
@@ -94,11 +81,8 @@ extension RecipeDetails {
 
         id = idValue
         name = nameValue
-        cuisine = cuisineValue
         instructions = instructionsValue
-        thumbnailURLString = thumbnailValue
-        videoURLString = videoURLValue
-        source = sourceValue
+        videoURL = videoValue
         ingredients = ingredientsValue.filter { !$0.isEmpty }
         measurements = measurementsValue.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
     }
