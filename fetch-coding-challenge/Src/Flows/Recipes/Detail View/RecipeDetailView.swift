@@ -24,6 +24,7 @@ struct RecipeDetailView: View {
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
+                        .cornerRadius(4)
                 } placeholder: {
                     ProgressView()
                 }
