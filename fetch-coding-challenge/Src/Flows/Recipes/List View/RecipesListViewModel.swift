@@ -11,6 +11,7 @@ extension RecipesListView {
 
     @MainActor
     final class ViewModel: ObservableObject {
+
         @Published private(set) var recipes = [Recipe]()
 
         private let networkService: NetworkService

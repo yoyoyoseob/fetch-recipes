@@ -9,6 +9,7 @@ import SwiftUI
 
 struct RecipesListView: View {
 
+    @EnvironmentObject var networkService: NetworkService
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
@@ -16,7 +17,7 @@ struct RecipesListView: View {
             List {
                 ForEach(viewModel.recipes) { recipe in
                     NavigationLink {
-                        RecipeDetailView(viewModel: .init(id: recipe.id, networkService: .init()))
+                        RecipeDetailView(viewModel: .init(id: recipe.id, networkService: networkService))
                     } label: {
                         Text(recipe.name)
                     }

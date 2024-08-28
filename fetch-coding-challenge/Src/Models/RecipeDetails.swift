@@ -20,8 +20,9 @@ struct RecipeDetails: Decodable {
     let ingredients: [String]
     let measurements: [String]
 
-    var measuredIngredients: [(String, String)] {
+    var measuredIngredients: [MeasuredIngredient] {
         Array(zip(ingredients, measurements))
+            .map { MeasuredIngredient(ingredient: $0.0, measurement: $0.1) }
     }
 }
 

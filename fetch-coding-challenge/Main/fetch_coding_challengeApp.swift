@@ -15,6 +15,7 @@ struct fetch_coding_challengeApp: App {
     var body: some Scene {
         WindowGroup {
             RecipesListView(viewModel: .init(networkService: networkService))
+                .environmentObject(networkService)
         }
     }
 }

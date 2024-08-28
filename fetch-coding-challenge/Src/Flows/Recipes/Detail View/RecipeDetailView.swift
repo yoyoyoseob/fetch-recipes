@@ -15,8 +15,8 @@ struct RecipeDetailView: View {
         VStack {
             Text(viewModel.name)
             Text(viewModel.instructions)
-            ForEach(viewModel.ingredients, id: \.0) { ingredient, measurement in
-                Text("\(ingredient): \(measurement)")
+            ForEach(viewModel.ingredients) { element in
+                Text("\(element.ingredient): \(element.measurement)")
             }
         }
         .padding()
