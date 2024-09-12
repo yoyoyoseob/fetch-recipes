@@ -26,6 +26,7 @@
 		71D774102C7D5B940073E3CD /* RecipeDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7740F2C7D5B940073E3CD /* RecipeDetailView.swift */; };
 		71D774142C7D63CF0073E3CD /* RecipeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D774132C7D63CF0073E3CD /* RecipeDetailViewModel.swift */; };
 		71D774162C7EB6290073E3CD /* MeasuredIngredient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */; };
+		71E7444F2C9324DD0092C686 /* RecipeDetailsUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71E7444E2C9324DD0092C686 /* RecipeDetailsUI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,7 @@
 		71D7740F2C7D5B940073E3CD /* RecipeDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailView.swift; sourceTree = "<group>"; };
 		71D774132C7D63CF0073E3CD /* RecipeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailViewModel.swift; sourceTree = "<group>"; };
 		71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeasuredIngredient.swift; sourceTree = "<group>"; };
+		71E7444E2C9324DD0092C686 /* RecipeDetailsUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailsUI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -194,6 +196,7 @@
 			children = (
 				71C7EFEF2C7CD6CA009CA0CD /* Recipe.swift */,
 				71D774002C7CDE640073E3CD /* RecipeDetails.swift */,
+				71E7444E2C9324DD0092C686 /* RecipeDetailsUI.swift */,
 				71D774152C7EB6290073E3CD /* MeasuredIngredient.swift */,
 			);
 			path = Models;
@@ -373,6 +376,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71E7444F2C9324DD0092C686 /* RecipeDetailsUI.swift in Sources */,
 				71D774142C7D63CF0073E3CD /* RecipeDetailViewModel.swift in Sources */,
 				71C7EFEE2C7CD164009CA0CD /* RecipeEndpoints.swift in Sources */,
 				71D7740C2C7D56AB0073E3CD /* RecipesListView.swift in Sources */,

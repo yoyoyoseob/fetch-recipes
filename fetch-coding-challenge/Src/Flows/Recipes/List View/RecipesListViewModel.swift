@@ -27,7 +27,6 @@ extension RecipesListView {
                 let result: RecipesResponse = try await networkService.request(endpoint: RecipeEndpoints.fetchRecipes("dessert"))
                 state = .loaded(result.meals.sorted { $0.name < $1.name })
             } catch {
-                print("Did Error")
                 state = .error(error)
             }
         }

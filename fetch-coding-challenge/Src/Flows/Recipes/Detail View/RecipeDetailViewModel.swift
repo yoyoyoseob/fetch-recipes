@@ -12,16 +12,8 @@ extension RecipeDetailView {
     @MainActor
     final class ViewModel: ObservableObject {
 
-        @Published private(set) var recipeDetails: RecipeDetails?
-
-        var name: String { recipe.name }
-        var instructions: [String] {
-            guard let details = recipeDetails else { return ["<RecipeInstructions>"] }
-            return details.instructions.split(whereSeparator: \.isNewline).map { String($0) }
-        }
-        var ingredients: [MeasuredIngredient] { recipeDetails?.measuredIngredients ?? [] }
-        var imageURL: URL? { URL(string: recipe.thumbnailURLString) }
-        var videoURL: URL? { recipeDetails?.videoURL }
+        @Published private(set) var state: ViewState<RecipeDetailsUI> = .idle
+        var title: String { recipe.name }
 
         private let recipe: Recipe
         private let networkService: NetworkService
@@ -32,11 +24,18 @@ extension RecipeDetailView {
         }
 
         func loadDetails() async {
+            state = .loading
+
             do {
                 let result: RecipeDetailsResponse = try await networkService.request(endpoint: RecipeEndpoints.recipeDetails(recipe.id))
-                recipeDetails = result.meals.first
+
+                if let details = result.meals.first {
+                    state = .loaded(RecipeDetails.mapToUI(details))
+                } else {
+                    state = .error(APIError(errorCode: "Error-0", message: "Unable to fetch recipe details"))
+                }
             } catch {
-                print("RecipeDetailView.ViewModel<loadDetails>: \(error)")
+                state = .error(error)
             }
         }
     }

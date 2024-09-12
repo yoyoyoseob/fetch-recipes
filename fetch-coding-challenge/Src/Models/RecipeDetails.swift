@@ -15,6 +15,7 @@ struct RecipeDetails: Decodable {
     let id: String
     let name: String
     let instructions: String
+    let thumbnailURL: URL?
     let videoURL: URL?
     let ingredients: [String]
     let measurements: [String]
@@ -44,6 +45,7 @@ extension RecipeDetails {
         case id = "idMeal"
         case name = "strMeal"
         case instructions = "strInstructions"
+        case thumbnailURL = "strMealThumb"
         case videoURL = "strYoutube"
         case ingredient = "strIngredient"
         case measurement = "strMeasure"
@@ -54,6 +56,7 @@ extension RecipeDetails {
         var idValue = ""
         var nameValue = ""
         var instructionsValue = ""
+        var thumbnailValue: URL?
         var videoValue: URL?
 
         // Cannot set directly as there are no guarantees that keys are unique. In this case we simply take the latest value.
@@ -65,6 +68,8 @@ extension RecipeDetails {
                 nameValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
             case CodingKeys.instructions.rawValue:
                 instructionsValue = try container.decode(String.self, forKey: .init(stringValue: key.stringValue)!)
+            case CodingKeys.thumbnailURL.rawValue:
+                thumbnailValue = try container.decode(URL.self, forKey: .init(stringValue: key.stringValue)!)
             case CodingKeys.videoURL.rawValue:
                 videoValue = try container.decode(URL.self, forKey: .init(stringValue: key.stringValue)!)
             default: break
@@ -83,6 +88,7 @@ extension RecipeDetails {
         id = idValue
         name = nameValue
         instructions = instructionsValue
+        thumbnailURL = thumbnailValue
         videoURL = videoValue
         ingredients = ingredientsValue.filter { !$0.isEmpty }
         measurements = measurementsValue.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
