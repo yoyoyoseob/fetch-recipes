@@ -12,7 +12,7 @@ extension RecipesListView {
     @MainActor
     final class ViewModel: ObservableObject {
 
-        @Published private(set) var recipes = [Recipe]()
+        @Published private(set) var state: ViewState<[Recipe]> = .idle
 
         private let networkService: NetworkService
 
@@ -21,11 +21,13 @@ extension RecipesListView {
         }
 
         func loadRecipes() async {
+            state = .loading
+
             do {
                 let result: RecipesResponse = try await networkService.request(endpoint: RecipeEndpoints.fetchRecipes("dessert"))
-                recipes = result.meals.sorted { $0.name < $1.name }
+                state = .loaded(result.meals.sorted { $0.name < $1.name })
             } catch {
-                print("RecipesListView.ViewModel<loadRecipes>: \(error)")
+                state = .error(error)
             }
         }
     }

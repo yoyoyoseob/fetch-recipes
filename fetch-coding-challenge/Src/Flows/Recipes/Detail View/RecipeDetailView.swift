@@ -10,6 +10,7 @@ import SwiftUI
 
 struct RecipeDetailView: View {
 
+    @State private var showingAlert = false
     @ObservedObject var viewModel: ViewModel
 
     private let rows: [GridItem] = [
@@ -23,63 +24,74 @@ struct RecipeDetailView: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                AsyncImage(url: viewModel.imageURL) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(4)
-                } placeholder: {
+                switch viewModel.state {
+                case .idle, .loading:
                     ProgressView()
-                }
+                case .loaded(let result):
+                    AsyncImage(url: result.imageURL) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .cornerRadius(4)
+                    } placeholder: {
+                        ProgressView()
+                    }
 
-                Color(.gray.withAlphaComponent(0.4))
-                    .frame(height: 1.5)
+                    Color(.gray.withAlphaComponent(0.4))
+                        .frame(height: 1.5)
 
-                Group {
-                    if !viewModel.ingredients.isEmpty {
-                        ScrollView(.horizontal) {
-                            LazyHGrid(rows: rows, spacing: 12) {
-                                ForEach(viewModel.ingredients) { element in
-                                    Text("\(element.ingredient.capitalized): \(element.measurement)")
-                                        .font(.footnote)
+                    Group {
+                        if !result.ingredients.isEmpty {
+                            ScrollView(.horizontal) {
+                                LazyHGrid(rows: rows, spacing: 12) {
+                                    ForEach(result.ingredients) { element in
+                                        Text("\(element.ingredient.capitalized): \(element.measurement)")
+                                            .font(.footnote)
+                                    }
                                 }
                             }
+                        } else {
+                            Text("<Ingredients>")
                         }
-                    } else {
-                        Text("<Ingredients>")
                     }
-                }
-                .padding()
-                .overlay {
-                    RoundedRectangle(cornerRadius: 4)
-                        .stroke(.gray, lineWidth: 1)
-                }
-
-                Color(.gray.withAlphaComponent(0.4))
-                    .frame(height: 1.5)
-
-                VStack(alignment: .leading) {
-                    Text("Instructions")
-                        .font(.title2)
-                        .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
-                        .padding(.top, 2)
-
-                    ForEach(Array(viewModel.instructions.enumerated()), id: \.element) { index, step in
-                        Text("**\(index + 1).** \(step)")
-                            .multilineTextAlignment(.leading)
-                            .fixedSize(horizontal: false, vertical: true)
+                    .padding()
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 4)
+                            .stroke(.gray, lineWidth: 1)
                     }
-                    .padding(4)
-                }
 
-                if let videoURL = viewModel.videoURL {
-                    VideoPlayer(player: AVPlayer(url: videoURL))
-                        .frame(height: 240)
-                        .padding(.top)
+                    Color(.gray.withAlphaComponent(0.4))
+                        .frame(height: 1.5)
+
+                    VStack(alignment: .leading) {
+                        Text("Instructions")
+                            .font(.title2)
+                            .fontWeight(/*@START_MENU_TOKEN@*/.bold/*@END_MENU_TOKEN@*/)
+                            .padding(.top, 2)
+
+                        ForEach(Array(result.instructions.enumerated()), id: \.element) { index, step in
+                            Text("**\(index + 1).** \(step)")
+                                .multilineTextAlignment(.leading)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
+                        .padding(4)
+                    }
+
+                    if let videoURL = result.videoURL {
+                        VideoPlayer(player: AVPlayer(url: videoURL))
+                            .frame(height: 240)
+                            .padding(.top)
+                    }
+                case .error(let error):
+                    Text("Oops, something went wrong")
+                        .onAppear { showingAlert = true }
+                        .alert(error.localizedDescription, isPresented: $showingAlert) {
+                            Button("OK", role: .cancel) {}
+                        }
                 }
             }
             .padding(.horizontal)
-            .navigationTitle(viewModel.name)
+            .navigationTitle(viewModel.title)
             .navigationBarTitleDisplayMode(.inline)
             .task {
                 await viewModel.loadDetails()
